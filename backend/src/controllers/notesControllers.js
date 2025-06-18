@@ -10,8 +10,18 @@ export async function getAllNotes (req, res) {
     }
 }
 
-export const createNote = (req, res) => {
-    res.status(201).json({ message: "You created a note successfully" });
+export async function createNote (req, res) {
+    try {
+        const { title, content } = req.body;
+        const newNote = new Note({ title, content });
+
+        await newNote.save();
+        res.status(201).json("Note created successfully");
+    } catch (error) {
+        console.error("Error in createNote controller:", error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+
 }
 
 export const updateNote = (req, res) => {
