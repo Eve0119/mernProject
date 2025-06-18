@@ -13,7 +13,6 @@ connectDB();
 app.use(express.json());
 app.use('/api/notes', notesRoutes);
 
-
 app.listen(PORT, () => {
   console.log('Server is running on http://localhost:' + PORT);
 });
