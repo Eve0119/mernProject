@@ -2,14 +2,20 @@ import React from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router';
 import { ArrowLeftIcon } from 'lucide-react';
+import { toast } from 'react-hot-toast';
 
 const CreatePage = () => {
   const [title, setTitle] = React.useState('');
   const [content, setContent] = React.useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Creating note with title:', title, 'and content:', content);
 
+    if (!title || !content) {
+      toast.error('All fields are required');
+    }
   }
 
   return (
@@ -20,6 +26,45 @@ const CreatePage = () => {
               <ArrowLeftIcon className='size-5'/>
               Back to Notes
             </Link>
+
+            <div className="card bg-base-100">
+              <div className='card-body'>
+                <h2 className='card-title text-2xl mb-4'>
+                  Create New Note
+                </h2>
+                <form onSubmit={handleSubmit}>
+                  <div className='form-control mb-4'>
+                    <label className='label'>
+                      <span className='label-text'>Title</span>
+                    </label>
+                    <input type="text"
+                    placeholder='Note Title' 
+                    className='input input-bordered'
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}/>
+                  </div>
+
+                  <div className="form-control mb-4">
+                    <label className="label">
+                      <span className="label-text">Content</span>
+                    </label>
+                    <textarea
+                      placeholder="Write your note here..."
+                      className="textarea textarea-bordered h-32"
+                      value={content}
+                      onChange={(e) => setContent(e.target.value)}
+                    />
+                  </div>
+
+                  <div className="card-actions justify-end">
+                    <button type='submit' className='btn btn-primary' disabled={loading}>
+                      {loading ? "Creating..." : "Create Note"}
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+            </div>
           </div>
         </div>
     </div>
