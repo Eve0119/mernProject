@@ -1,20 +1,43 @@
 import React from 'react'
 import { useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate} from 'react-router';
 import { ArrowLeftIcon } from 'lucide-react';
 import { toast } from 'react-hot-toast';
+import axios from 'axios';
 
 const CreatePage = () => {
   const [title, setTitle] = React.useState('');
   const [content, setContent] = React.useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log('Creating note with title:', title, 'and content:', content);
 
     if (!title || !content) {
       toast.error('All fields are required');
+      return;
+    }
+
+    setLoading(true);
+    try {
+      await axios.post('http://localhost:3000/api/notes', {
+        title,
+        content
+      })
+      setTitle('');
+      setContent('');
+      toast.success('Note created successfully!');
+      navigate('/');
+    } catch (error) {
+      console.error('Error creating note:', error);
+      toast.error('Failed to create notes');
+      
+    }finally {
+      setLoading(false);
+
     }
   }
 
