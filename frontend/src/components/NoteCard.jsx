@@ -14,7 +14,7 @@ const NoteCard = ({note, setNotes}) => {
 
         try {
             await axiosInstance.delete(`/notes/${id}`);
-            setNotes(prevNotes => prevNotes.filter(note => note._i !== id));
+            setNotes(prevNotes => prevNotes.filter(note => note._id !== id));
             toast.success('Note deleted successfully!', {
                 icon: '🗑️',
             });
@@ -39,7 +39,7 @@ const NoteCard = ({note, setNotes}) => {
                 </span>
                 <div className='flex items-center gap-1'>
                     <PenSquareIcon className='size-4' />
-                    <button className='btn btn-ghost btn-xs text-error' onClick={(e) => {handleDelete(e, note.id)}}>
+                    <button className='btn btn-ghost btn-xs text-error' onClick={(e) => {handleDelete(e, note._id)}}>
                         <Trash2Icon className='size-4'/>
                     </button>
                 </div>
