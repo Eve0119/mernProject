@@ -29,7 +29,10 @@ const CreatePage = () => {
       })
       setTitle('');
       setContent('');
-      toast.success('Note created successfully!');
+      toast.success('Note created successfully!', {
+        icon: '🤩',
+
+      });
       navigate('/');
     } catch (error) {
       console.error('Error creating note:', error);
