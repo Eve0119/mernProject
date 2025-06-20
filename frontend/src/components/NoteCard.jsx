@@ -5,7 +5,7 @@ import { formatDate } from '../lib/utils'
 import axiosInstance from '../lib/axios'
 import { toast } from 'react-hot-toast'
 
-const NoteCard = ({note}) => {
+const NoteCard = ({note, setNotes}) => {
 
     const handleDelete = async (e, id) => {
         e.preventDefault(); // Prevent default link behavior
@@ -14,6 +14,7 @@ const NoteCard = ({note}) => {
 
         try {
             await axiosInstance.delete(`/notes/${id}`);
+            setNotes(prevNotes => prevNotes.filter(note => note._i !== id));
             toast.success('Note deleted successfully!', {
                 icon: '🗑️',
             });
